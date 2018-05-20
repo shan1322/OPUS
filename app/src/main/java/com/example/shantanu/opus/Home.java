@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,9 @@ import com.google.firebase.auth.FirebaseUser;
     }
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
+        if (!validateForm()) {
+            return;
+        }
 
 
         // [START create_user_with_email]
@@ -86,8 +90,30 @@ import com.google.firebase.auth.FirebaseUser;
             findViewById(R.id.signup).setVisibility(View.VISIBLE);
         }
     }
+     private boolean validateForm() {
+         boolean valid = true;
 
-    public void onClick(View v) {
+         String email = mEmailField.getText().toString();
+         if (TextUtils.isEmpty(email)) {
+             mEmailField.setError("Required.");
+             valid = false;
+         } else {
+             mEmailField.setError(null);
+         }
+
+         String password = mPasswordField.getText().toString();
+         if (TextUtils.isEmpty(password)) {
+             mPasswordField.setError("Required.");
+             valid = false;
+         } else {
+             mPasswordField.setError(null);
+         }
+
+         return valid;
+     }
+
+
+     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.signup) {
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
