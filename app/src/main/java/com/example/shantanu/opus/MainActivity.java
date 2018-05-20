@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
-    //private Button  msignup;
+    private TextView msignup;
+
     private static final String TAG = "MainActivity";
 
     @Override
@@ -30,12 +32,16 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         setContentView(R.layout.activity_main);
         mEmailField = findViewById(R.id.Email);
         mPasswordField = findViewById(R.id.password);
-
-        findViewById(R.id.signup).setOnClickListener(this);
         findViewById(R.id.signin).setOnClickListener(this);
-
-
+        msignup=findViewById(R.id.signup);
         mAuth = FirebaseAuth.getInstance();
+        msignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, Home.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
 
 
     }
@@ -47,39 +53,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
-    }
-
-    private void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
-
-        //showProgressDialog();
-
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                            Intent myIntent = new Intent(MainActivity.this, Main2Activity.class);
-                            MainActivity.this.startActivity(myIntent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // [START_EXCLUDE]
-                        // hideProgressDialog();
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END create_user_with_email]
     }
 
     private void signIn(String email, String password) {
@@ -123,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             findViewById(R.id.Email).setVisibility(View.GONE);
             findViewById(R.id.password).setVisibility(View.GONE);
-            findViewById(R.id.signup).setVisibility(View.VISIBLE);
+            findViewById(R.id.signin).setVisibility(View.VISIBLE);
 
 
         } else {
@@ -131,15 +104,13 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             findViewById(R.id.Email).setVisibility(View.VISIBLE);
             findViewById(R.id.password).setVisibility(View.VISIBLE);
-            findViewById(R.id.signup).setVisibility(View.VISIBLE);
+            findViewById(R.id.signin).setVisibility(View.VISIBLE);
         }
     }
 
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.signup) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.signin) {
+       if (i == R.id.signin) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
     }
