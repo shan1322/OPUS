@@ -1,3 +1,3 @@
 # OPUS
 Android app for OPUS
-An office app for OPUS a co working a space startup
+An office app for OPUS a co-working space startup
