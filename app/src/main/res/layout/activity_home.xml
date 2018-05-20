@@ -6,34 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home">
-
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="179dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@android:color/transparent"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="179dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+    <EditText
+        android:id="@+id/Email"
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="107dp"
-        android:background="@android:color/transparent"
-        android:text="Button" />
+        android:layout_marginTop="74dp"
+        android:autoLink="email"
+        android:ems="10"
+        android:hapticFeedbackEnabled="true"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:scrollbarSize="@dimen/cardview_compat_inset_shadow"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="65dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/Email"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:scrollbarSize="@dimen/cardview_compat_inset_shadow"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="123dp" />
+
 
     <Button
-        android:id="@+id/button7"
-        android:layout_width="179dp"
+        android:id="@+id/signup"
+        style="@style/AppTheme"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="164dp"
-        android:layout_marginStart="105dp"
-        android:background="@android:color/transparent"
-        android:text="Button" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="212dp"
+        android:text="SIGNUP"
+        android:textColor="#ffb300" />
+
+
 </RelativeLayout>

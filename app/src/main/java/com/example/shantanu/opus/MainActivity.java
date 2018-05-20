@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         if (user != null) {
 
 
-            findViewById(R.id.Email).setVisibility(View.GONE);
-            findViewById(R.id.password).setVisibility(View.GONE);
+            findViewById(R.id.Email).setVisibility(View.VISIBLE);
+            findViewById(R.id.password).setVisibility(View.VISIBLE);
             findViewById(R.id.signin).setVisibility(View.VISIBLE);
 
 
