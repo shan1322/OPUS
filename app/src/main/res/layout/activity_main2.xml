@@ -10,9 +10,18 @@
         android:id="@+id/signout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignOut"
         android:background="@color/cardview_light_background"
+        android:text="SignOut"
         android:textColor="#ffb300"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="274dp" />
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="396dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="282dp"
+        android:layout_height="254dp"
+        android:layout_marginBottom="172dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_report_image"
+        tools:layout_editor_absoluteX="51dp" />
 </android.support.constraint.ConstraintLayout>
