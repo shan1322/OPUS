@@ -1,13 +1,17 @@
 package com.example.shantanu.opus;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     private EditText mEmailField;
     private EditText mPasswordField;
     private TextView msignup;
+    private Button msignin;
     private GoogleSignInClient mGoogleSignInClient;
     private DatabaseReference mDatabase;
     private static final String TAG = "MainActivity";
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         setContentView(R.layout.activity_main);
         mEmailField = findViewById(R.id.Email);
         mPasswordField = findViewById(R.id.password);
+        msignin=findViewById(R.id.signin);
         findViewById(R.id.signin).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         msignup=findViewById(R.id.signup);
@@ -115,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                                         MainActivity.this.startActivity(myIntent);
                                     }
                                     else{
-                                       Toast.makeText(MainActivity.this, "User type=."+usertype,
+                                       Toast.makeText(MainActivity.this, "Try partner login",
                                                Toast.LENGTH_SHORT).show();
                                    }
                                 }
@@ -286,7 +292,13 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     public void onClick(View v) {
         int i = v.getId();
        if (i == R.id.signin) {//sigin button click
+
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
+
+// To dismiss the dialog
+
+
         }
         if (i == R.id.sign_in_button) {//google sign in
             signIn();
