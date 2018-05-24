@@ -177,8 +177,53 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Intent myIntent = new Intent(MainActivity.this, Main2Activity.class);
-                            MainActivity.this.startActivity(myIntent);
+                            DatabaseReference root =
+                                    FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference key=root.child(FirebaseAuth.getInstance().getUid()).child("Usertype");
+                            key.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String usertype=dataSnapshot.getValue(String.class);
+                                    if(usertype.equalsIgnoreCase("Individual")) {
+                                        try {
+
+                                            Intent myIntent = new Intent(MainActivity.this, Main2Activity.class);
+                                            MainActivity.this.startActivity(myIntent);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Toast.makeText(MainActivity.this, "User type=."+e,
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.d("test",""+e);
+                                        }
+                                    }
+                                    else if(usertype.equalsIgnoreCase("Admin")) {
+                                        try {
+
+
+                                            Intent myIntent = new Intent(MainActivity.this, admin.class);
+                                            MainActivity.this.startActivity(myIntent);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Toast.makeText(MainActivity.this, "User type=."+e,
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.d("test",""+e);
+                                        }
+
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this, "User type=."+usertype,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
