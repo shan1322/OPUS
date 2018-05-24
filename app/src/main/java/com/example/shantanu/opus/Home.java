@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,11 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
- public class Home extends AppCompatActivity implements  View.OnClickListener{
+public class Home extends AppCompatActivity implements  View.OnClickListener{
     private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
+
+
+
     private static final String TAG = "Home";
 
     @Override
@@ -39,7 +44,7 @@ import com.google.firebase.auth.FirebaseUser;
         updateUI(currentUser);
 
     }
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password) {//create account
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -56,7 +61,7 @@ import com.google.firebase.auth.FirebaseUser;
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                           Intent myIntent = new Intent(Home.this, Main2Activity.class);
+                           Intent myIntent = new Intent(Home.this, Usertype.class);
                             Home.this.startActivity(myIntent);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -73,6 +78,7 @@ import com.google.firebase.auth.FirebaseUser;
                 });
         // [END create_user_with_email]
     }
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
@@ -117,6 +123,9 @@ import com.google.firebase.auth.FirebaseUser;
         int i = v.getId();
         if (i == R.id.signup) {
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
+
+
         }
     }
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Usertype">
+
+    <Button
+        android:id="@+id/signup"
+        style="@style/AppTheme"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/group"
+        android:layout_below="@+id/group"
+        android:background="@color/cardview_light_background"
+        android:text="SIGNUP"
+        android:textColor="#ffb300" />
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="160dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="149dp">
+
+        <RadioButton
+            android:id="@+id/company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comapany Signup"
+            android:textColor="#ffb300" />
+
+        <RadioButton
+            android:id="@+id/admin"
+            android:layout_width="156dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/signup"
+            android:layout_below="@+id/indiviual"
+            android:text="Admin Signup"
+            android:textColor="#ffb300" />
+
+        <RadioButton
+            android:id="@+id/indiviual"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:text="Individual Signup"
+            android:textColor="#ffb300" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="71dp"
+        android:text="Select User Type"
+        android:textColor="#ffb300"
+        android:textSize="18sp" />
+
+
+
+</RelativeLayout>
