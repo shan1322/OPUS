@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,13 +24,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class MainActivity extends AppCompatActivity implements  View.OnClickListener {
     private FirebaseAuth mAuth;
     private EditText mEmailField;
     private EditText mPasswordField;
     private TextView msignup;
     private GoogleSignInClient mGoogleSignInClient;
-
+    private DatabaseReference mDatabase;
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     }
 
-    private void signIn(String email, String password) {
+    private void signIn(String email, String password) {//email password login
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
@@ -80,10 +87,46 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
+                            String usertype="";
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            Intent myIntent = new Intent(MainActivity.this, Main2Activity.class);
-                            MainActivity.this.startActivity(myIntent);
+                             DatabaseReference root =
+                                    FirebaseDatabase.getInstance().getReference();
+                             DatabaseReference key=root.child(FirebaseAuth.getInstance().getUid()).child("Usertype");
+                            key.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String usertype=dataSnapshot.getValue(String.class);
+                                   if(usertype.equalsIgnoreCase("Individual")) {
+                                       try {
+
+                                           Intent myIntent = new Intent(MainActivity.this, Main2Activity.class);
+                                           MainActivity.this.startActivity(myIntent);
+                                       }
+                                       catch (Exception e)
+                                       {
+                                           Toast.makeText(MainActivity.this, "User type=."+e,
+                                                   Toast.LENGTH_SHORT).show();
+                                           Log.d("test",""+e);
+                                       }
+                                   }
+                                    else if(usertype.equalsIgnoreCase("Admin")) {
+                                        Intent myIntent = new Intent(MainActivity.this, admin.class);
+                                        MainActivity.this.startActivity(myIntent);
+                                    }
+                                    else{
+                                       Toast.makeText(MainActivity.this, "User type=."+usertype,
+                                               Toast.LENGTH_SHORT).show();
+                                   }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -104,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         // [END sign_in_with_email]
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {//gmail
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -153,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
@@ -196,10 +240,10 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     public void onClick(View v) {
         int i = v.getId();
-       if (i == R.id.signin) {
+       if (i == R.id.signin) {//sigin button click
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
         }
-        if (i == R.id.sign_in_button) {
+        if (i == R.id.sign_in_button) {//google sign in
             signIn();
         }
     }

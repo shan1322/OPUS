@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".Main2Activity" />
         <activity android:name=".Home" />
-        <activity android:name=".Usertype"></activity>
+        <activity android:name=".Usertype" />
+        <activity android:name=".admin"></activity>
     </application>
 
 </manifest>
